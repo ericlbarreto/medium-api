@@ -1,7 +1,7 @@
 import BaseController from "./base";
 import { UserService } from "@services";
 
-class UserController extends BaseController {
+export default class UserController extends BaseController {
     constructor() {
         super();
 
