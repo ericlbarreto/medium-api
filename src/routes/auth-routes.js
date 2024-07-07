@@ -12,8 +12,8 @@ export default class AuthRoutes extends BaseRoutes {
 	setup() {
 		this.router.post(
 			"/",
-			this.SchemaValidator.validate(AuthSchema.create),
-			this.AuthController.create.bind(this.AuthController)
+			this.SchemaValidator.validate(AuthSchema.login),
+			this.AuthController.login.bind(this.AuthController)
 		);    
         return this.router;
 	}

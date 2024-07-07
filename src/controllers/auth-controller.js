@@ -1,5 +1,5 @@
 import BaseController from "./base";
-import AuthService from "../services";
+import { AuthService } from "../services";
 
 export default class AuthController extends BaseController {
     constructor() {
