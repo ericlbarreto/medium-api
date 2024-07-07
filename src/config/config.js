@@ -10,10 +10,8 @@ module.exports = {
 	port: process.env.DATABASE_PORT || 5432,
 	define: {
 		timestamps: true,
-		underscored: true,
-		underscoredAll: true,
-		createdAt: "created_at",
-		updatedAt: "updated_at",
+		createdAt: "createdAt",
+		updatedAt: "updatedAt",
 	},
 	dialectOptions: {
 		timezone: "America/Sao_Paulo",

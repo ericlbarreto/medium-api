@@ -23,14 +23,12 @@ export default class User extends BaseModel {
 				},
 			},
 			{
-				paranoid: true,
 				timestamps: true,
 				sequelize: sequelize,
 				modelName: "user",
-				tableName: "users",
-				createdAt: "created_at",
-				updatedAt: "updated_at",
-				deletedAt: "deleted_at",
+				tableName: "Users",
+				createdAt: "createdAt",
+				updatedAt: "updatedAt",
 			}
 		);
 	}
