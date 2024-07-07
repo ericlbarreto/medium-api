@@ -1,4 +1,3 @@
-import { update } from 'lodash';
 import * as yup from 'yup';
 
 const userSchema = {
