@@ -1,5 +1,5 @@
-import { UserSchema } from "@schemas";
-import { UserController } from "@controllers";
+import { UserSchema } from "../schemas";
+import { UserController } from "../controllers";
 import BaseRoutes from "./base";
 
 export default class UserRoutes extends BaseRoutes {
@@ -33,5 +33,7 @@ export default class UserRoutes extends BaseRoutes {
             this.SchemaValidator.validate(UserSchema.delete),
             this.UserController.delete.bind(this.UserController)
         )
+    
+        return this.router;
 	}
 }

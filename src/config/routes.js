@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { AuthMiddleware } from "../middlewares";
 import { specs, swaggerUi } from "../../swagger";
-import { UserRoutes } from "@routes";
+import { UserRoutes } from "../routes";
 
 export default class Routes {
 	constructor() {

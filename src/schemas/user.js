@@ -4,7 +4,7 @@ import * as yup from 'yup';
 const userSchema = {
     create: {
         body: yup.object().shape({
-            username: yup.string().required(),
+            name: yup.string().required(),
             email: yup.string().email().required(),
             password: yup.string().required(),
         }).noUnknown(),
@@ -19,7 +19,7 @@ const userSchema = {
             id: yup.string().required(),
         }).noUnknown(),
         body: yup.object().shape({
-            username: yup.string(),
+            name: yup.string(),
             email: yup.string().email(),
             password: yup.string(),
         }).noUnknown(),
