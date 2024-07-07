@@ -1,7 +1,7 @@
 import * as bcrypt from "bcrypt";
 import User from "../models/user";
 
-class UserService {
+export default class UserService {
 	async create(user) {
 		const transaction = await User.sequelize.transaction();
 
@@ -40,7 +40,7 @@ class UserService {
 				body.password = await bcrypt.hash(body.password, 10);
 			}
 
-			const [numberOfAffectedRows, [updatedUser]] = await User.update(
+			const [_, [updatedUser]] = await User.update(
 				body,
 				{
 					where: { id },
