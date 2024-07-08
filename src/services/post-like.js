@@ -1,4 +1,4 @@
-import { Like, Post } from "../models";
+import { PostLike, Post } from "../models";
 
 export default class LikeService {
 	async like(userId, postId) {
@@ -15,7 +15,7 @@ export default class LikeService {
 				throw new Error("Post not found");
 			}
 
-			const liked = await Like.findOne({
+			const liked = await PostLike.findOne({
 				where: {
 					postId: postId,
 					userId: userId,
@@ -27,7 +27,7 @@ export default class LikeService {
 				throw new Error("Post already liked by this user");
 			}
 
-			await Like.create(
+			await PostLike.create(
 				{
 					postId: postId,
 					userId: userId,
@@ -35,7 +35,7 @@ export default class LikeService {
 				{ transaction }
 			);
 
-			await Post.increment("likes_count", {
+			await Post.increment("total_likes", {
 				where: {
 					id: postId,
 				},

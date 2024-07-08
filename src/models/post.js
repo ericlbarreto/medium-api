@@ -5,9 +5,9 @@ export default class Post extends BaseModel {
 		return super.init(
 			{
 				id: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					primaryKey: true,
-					defaultValue: DataTypes.UUIDV4,
+					autoIncrement: true,
 				},
 				title: {
 					type: DataTypes.STRING,
@@ -23,7 +23,7 @@ export default class Post extends BaseModel {
 					defaultValue: 0,
 				},
 				userId: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					allowNull: false,
 					references: {
 						model: 'users',

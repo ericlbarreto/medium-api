@@ -1,5 +1,5 @@
-import AuthService from "./auth-service";
-import UserService from "./user-service";
-import PostService from "./post-service";
+import AuthService from "./auth";
+import UserService from "./user";
+import PostService from "./post";
 
 export { AuthService, UserService, PostService };

@@ -1,16 +1,16 @@
 import BaseModel from "./base";
 
-export default class Like extends BaseModel {
+export default class PostLike extends BaseModel {
 	static load(sequelize, DataTypes) {
 		return super.init(
 			{
 				id: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					primaryKey: true,
-					defaultValue: DataTypes.UUIDV4,
+					autoIncrement: true,
 				},
 				userId: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					allowNull: false,
 					references: {
 						model: "users",
@@ -18,7 +18,7 @@ export default class Like extends BaseModel {
 					},
 				},
 				postId: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					allowNull: false,
 					references: {
 						model: "posts",
