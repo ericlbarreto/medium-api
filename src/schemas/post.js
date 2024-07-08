@@ -4,7 +4,7 @@ const postSchema = {
     create: {
         body: yup.object().shape({
             title: yup.string().required(),
-            content: yup.string().email().required(),
+            content: yup.string().required(),
             userId: yup.string().required(),
         }).noUnknown(),
     },

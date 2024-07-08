@@ -8,7 +8,7 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.UUID
       },
       title: {
         type: Sequelize.STRING
@@ -19,6 +19,16 @@ module.exports = {
       likes_count: {
         type: Sequelize.INTEGER,
         defaultValue: 0
+      },
+      userId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
