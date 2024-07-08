@@ -1,6 +1,6 @@
 import { PostLike, Post } from "../models";
 
-export default class LikeService {
+export default class PostLikeService {
 	async like(userId, postId) {
 		const transaction = await Post.sequelize.transaction();
 		try {
