@@ -26,7 +26,7 @@ export default class User extends BaseModel {
 				timestamps: true,
 				sequelize: sequelize,
 				modelName: "user",
-				tableName: "Users",
+				tableName: "users",
 				createdAt: "createdAt",
 				updatedAt: "updatedAt",
 			}

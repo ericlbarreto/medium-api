@@ -13,7 +13,7 @@ export default class Like extends BaseModel {
 					type: DataTypes.UUID,
 					allowNull: false,
 					references: {
-						model: "Users",
+						model: "users",
 						key: "id",
 					},
 				},
@@ -21,7 +21,7 @@ export default class Like extends BaseModel {
 					type: DataTypes.UUID,
 					allowNull: false,
 					references: {
-						model: "Posts",
+						model: "posts",
 						key: "id",
 					},
 				},
@@ -30,7 +30,7 @@ export default class Like extends BaseModel {
 				timestamps: true,
 				sequelize: sequelize,
 				modelName: "like",
-				tableName: "Likes",
+				tableName: "post-likes",
 				createdAt: "createdAt",
 				updatedAt: "updatedAt",
 			}

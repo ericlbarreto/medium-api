@@ -17,7 +17,7 @@ export default class Post extends BaseModel {
 					type: DataTypes.TEXT,
 					allowNull: false,
 				},
-				likes_count: {
+				total_likes: {
 					type: DataTypes.INTEGER,
 					allowNull: false,
 					defaultValue: 0,
@@ -26,7 +26,7 @@ export default class Post extends BaseModel {
 					type: DataTypes.UUID,
 					allowNull: false,
 					references: {
-						model: 'Users',
+						model: 'users',
 						key: 'id'
 					}
 				},
@@ -35,7 +35,7 @@ export default class Post extends BaseModel {
 				timestamps: true,
 				sequelize: sequelize,
 				modelName: "post",
-				tableName: "Posts",
+				tableName: "posts",
 				createdAt: "createdAt",
 				updatedAt: "updatedAt",
 			}

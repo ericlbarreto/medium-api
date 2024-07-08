@@ -1,5 +1,11 @@
 import * as yup from 'yup';
 
+const findById = {
+    params: yup.object().shape({
+        id: yup.string().required(),
+    }).noUnknown(),
+}
+
 const userSchema = {
     create: {
         body: yup.object().shape({
@@ -8,26 +14,16 @@ const userSchema = {
             password: yup.string().required(),
         }).noUnknown(),
     },
-    read: {
-        params: yup.object().shape({
-            id: yup.string().required(),
-        }).noUnknown(),
-    },
+    read: findById.params,
     update: {
-        params: yup.object().shape({
-            id: yup.string().required(),
-        }).noUnknown(),
+        params: findById.params,
         body: yup.object().shape({
             name: yup.string(),
             email: yup.string().email(),
             password: yup.string(),
         }).noUnknown(),
     },
-    delete: {
-        params: yup.object().shape({
-            id: yup.string().required(),
-        }).noUnknown(),
-    }
+    delete: findById.params,
 }
 
 export default {
