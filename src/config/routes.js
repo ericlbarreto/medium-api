@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { AuthMiddleware } from "../middlewares";
 import { specs, swaggerUi } from "../../swagger";
-import { UserRoutes, AuthRoutes } from "../routes";
+import { UserRoutes, AuthRoutes, PostRoutes } from "../routes";
 
 export default class Routes {
 	constructor() {
@@ -9,6 +9,7 @@ export default class Routes {
 
 		this.UserRoutes = new UserRoutes();
 		this.AuthRoutes = new AuthRoutes();
+		this.PostRoutes = new PostRoutes();
 	}
 
 	setup() {
@@ -16,6 +17,13 @@ export default class Routes {
 
 		this.routes.use("/login", this.AuthRoutes.setup());
 		this.routes.use("/users", this.UserRoutes.setup());
+
+		this.routes.use(
+			"/posts",
+			AuthMiddleware.isAuthorized,
+			this.PostRoutes.setup()
+		);
+
 		return this.routes;
 	}
 }
