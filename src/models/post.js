@@ -1,6 +1,6 @@
 import BaseModel from "./base";
 
-export default class User extends BaseModel {
+export default class Post extends BaseModel {
 	static load(sequelize, DataTypes) {
 		return super.init(
 			{
@@ -9,24 +9,33 @@ export default class User extends BaseModel {
 					primaryKey: true,
 					defaultValue: DataTypes.UUIDV4,
 				},
-				name: {
+				title: {
 					type: DataTypes.STRING,
 					allowNull: false,
 				},
-				email: {
+				content: {
 					type: DataTypes.TEXT,
 					allowNull: false,
 				},
-				password: {
-					type: DataTypes.STRING,
+				likes_count: {
+					type: DataTypes.INTEGER,
 					allowNull: false,
+					defaultValue: 0,
+				},
+				userId: {
+					type: DataTypes.UUID,
+					allowNull: false,
+					references: {
+						model: 'Users',
+						key: 'id'
+					}
 				},
 			},
 			{
 				timestamps: true,
 				sequelize: sequelize,
-				modelName: "user",
-				tableName: "Users",
+				modelName: "post",
+				tableName: "Posts",
 				createdAt: "createdAt",
 				updatedAt: "updatedAt",
 			}
@@ -34,6 +43,6 @@ export default class User extends BaseModel {
 	}
 
 	static associate(models) {
-		this.hasMany(models.Post, { foreignKey: 'userId' })
+		this.belongsTo(models.User, { foreignKey: 'userId' });
 	}
 }
