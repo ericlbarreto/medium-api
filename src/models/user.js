@@ -34,7 +34,7 @@ export default class User extends BaseModel {
 	}
 
 	static associate(models) {
-		this.hasMany(models.Post, { foreignKey: 'userId' })
-		this.hasMany(models.Like, { foreignKey: 'userId' })
+		this.hasMany(models.Post, { foreignKey: 'userId', as: 'posts'})
+		this.hasMany(models.PostLike, { foreignKey: 'userId', as: 'post-likes'})
 	}
 }

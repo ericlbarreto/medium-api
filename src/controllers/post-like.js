@@ -11,8 +11,8 @@ export default class PostLikeController extends BaseController {
 	}
 
 	async like(req, res) {
-		const { postId } = req.params.id;
-		const { userId } = req.auth.id;
+		const postId = req.params.id;
+		const userId = req.auth.id;
 		try {
 			await this.PostLikeService.like(userId, postId);
 			this.successHandler(true, res);
@@ -22,8 +22,8 @@ export default class PostLikeController extends BaseController {
 	}
 
 	async dislike(req, res) {
-        const { postId } = req.params.id;
-		const { userId } = req.auth.id;
+        const postId = req.params.id;
+		const userId = req.auth.id;
 		try {
 			await this.PostLikeService.dislike(userId, postId);
 			this.successHandler(true, res);

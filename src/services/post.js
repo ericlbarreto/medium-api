@@ -1,4 +1,4 @@
-import { Post } from "../models";
+import { Post, PostLike } from "../models";
 
 export default class PostService {
 	async create(post) {
@@ -32,7 +32,14 @@ export default class PostService {
 
     async readAll() {
 		try {
-			const posts = await Post.findAll();
+			const posts = await Post.findAll({
+				include: [
+					{
+						model: PostLike,
+						as: 'post-likes',  // Certifique-se de que este alias corresponde ao alias definido na associação
+					},
+				],
+			});
 
 			return posts;
 		} catch (error) {

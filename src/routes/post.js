@@ -25,7 +25,7 @@ export default class PostRoutes extends BaseRoutes {
 
 		this.router.get(
 			"/",
-			this.SchemaValidator.validate(PostSchema.read),
+			// this.SchemaValidator.validate(PostSchema.read),
 			this.PostController.readAll.bind(this.PostController)
 		);
 

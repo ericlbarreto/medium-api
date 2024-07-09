@@ -16,7 +16,7 @@ module.exports = {
       content: {
         type: Sequelize.TEXT
       },
-      likes_count: {
+      total_likes: {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
