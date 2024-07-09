@@ -38,8 +38,9 @@ export default class PostController extends BaseController {
 
     async readAll(req, res) {
         const userId = req.auth.id;
+        const page = req.query.page || 1;
         try {
-            const posts = await this.PostService.readAll(userId);
+            const posts = await this.PostService.readAll(userId, { page });
             this.successHandler(posts, res);
         } catch (error) {
             this.errorHandler(error, req, res);
