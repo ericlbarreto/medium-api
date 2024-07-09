@@ -5,9 +5,9 @@ export default class Post extends BaseModel {
 		return super.init(
 			{
 				id: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					primaryKey: true,
-					defaultValue: DataTypes.UUIDV4,
+					autoIncrement: true,
 				},
 				title: {
 					type: DataTypes.STRING,
@@ -17,32 +17,66 @@ export default class Post extends BaseModel {
 					type: DataTypes.TEXT,
 					allowNull: false,
 				},
-				likes_count: {
+				total_likes: {
 					type: DataTypes.INTEGER,
 					allowNull: false,
 					defaultValue: 0,
 				},
 				userId: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					allowNull: false,
 					references: {
-						model: 'Users',
-						key: 'id'
-					}
+						model: "users",
+						key: "id",
+					},
 				},
 			},
 			{
 				timestamps: true,
 				sequelize: sequelize,
 				modelName: "post",
-				tableName: "Posts",
+				tableName: "posts",
 				createdAt: "createdAt",
 				updatedAt: "updatedAt",
+				defaultScope: {
+					attributes: {
+						exclude: ["userId"],
+					},
+				},
+				scopes: {
+					withAuthenticatedUser: (userId) => ({
+						attributes: [
+							[
+								sequelize.literal(`(
+							SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+							FROM "post-likes" AS pl
+							WHERE
+							  pl."postId" = "post"."id" AND
+							  pl."userId" = :userId
+						  )`),
+								"isLiked",
+							],
+							[
+								sequelize.literal(
+									`CASE WHEN "post"."userId" = :userId THEN TRUE ELSE FALSE END`
+								),
+								"isOwner",
+							],
+						],
+						replacements: {
+							userId,
+						},
+					}),
+				},
 			}
 		);
 	}
 
 	static associate(models) {
-		this.belongsTo(models.User, { foreignKey: 'userId' });
+		this.belongsTo(models.User, { foreignKey: "userId", as: "user" });
+		this.hasMany(models.PostLike, {
+			foreignKey: "postId",
+			as: "post-likes",
+		});
 	}
 }

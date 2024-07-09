@@ -1,4 +1,4 @@
-import { Post } from "../models";
+import { Post, PostLike } from "../models";
 
 export default class PostService {
 	async create(post) {
@@ -16,9 +16,23 @@ export default class PostService {
 		}
 	}
 
-	async read(id) {
+	async read(userId, postId) {
 		try {
-			const post = await Post.findByPk(id);
+			let post;
+			if (userId) {
+				post = await Post.scope([{name: "withAuthenticatedUser", options: userId}]).findByPk(postId ,{
+					attributes: [
+						"id",
+						"userId",
+						"title",
+						"content",
+						"total_likes",
+						"createdAt"
+					]
+				});
+			} else {
+				post = await Post.findByPk(postId);
+			}
 
 			if (!post) {
 				throw new Error("Post not found");
@@ -30,15 +44,30 @@ export default class PostService {
 		}
 	}
 
-    async readAll() {
+    async readAll(userId) {
 		try {
-			const posts = await Post.findAll();
-
-			return posts;
+		  let posts;
+	
+		  if (userId) {
+			posts = await Post.scope([{name: "withAuthenticatedUser", options: userId}]).findAll({
+				attributes: [
+					"id",
+					"userId",
+					"title",
+					"content",
+					"total_likes",
+					"createdAt"
+				]
+			});
+		  } else {
+			posts = await Post.findAll();
+		  }
+	
+		  return posts;
 		} catch (error) {
-			throw error;
+		  throw error;
 		}
-	}
+	  }
 
 	async update(body, id) {
 		const transaction = await Post.sequelize.transaction();

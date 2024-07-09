@@ -5,9 +5,9 @@ export default class User extends BaseModel {
 		return super.init(
 			{
 				id: {
-					type: DataTypes.UUID,
+					type: DataTypes.INTEGER,
 					primaryKey: true,
-					defaultValue: DataTypes.UUIDV4,
+					autoIncrement: true,
 				},
 				name: {
 					type: DataTypes.STRING,
@@ -26,7 +26,7 @@ export default class User extends BaseModel {
 				timestamps: true,
 				sequelize: sequelize,
 				modelName: "user",
-				tableName: "Users",
+				tableName: "users",
 				createdAt: "createdAt",
 				updatedAt: "updatedAt",
 			}
@@ -34,6 +34,7 @@ export default class User extends BaseModel {
 	}
 
 	static associate(models) {
-		this.hasMany(models.Post, { foreignKey: 'userId' })
+		this.hasMany(models.Post, { foreignKey: 'userId', as: 'posts'})
+		this.hasMany(models.PostLike, { foreignKey: 'userId', as: 'post-likes'})
 	}
 }
