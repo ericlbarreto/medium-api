@@ -22,7 +22,9 @@ const postSchema = {
             content: yup.string().email(),
         }).noUnknown(),
     },
-    delete: findById.params
+    delete: findById.params,
+    like: findById.params,
+    dislike: findById.params,
 }
 
 export default {
@@ -33,4 +35,6 @@ export default {
         body: postSchema.update.body,
     },
     delete: postSchema.delete,
+    like: postSchema.like,
+    dislike: postSchema.dislike,
 }
