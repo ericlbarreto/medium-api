@@ -30,22 +30,31 @@ export default class PostService {
 		}
 	}
 
-    async readAll() {
+    async readAll(userId) {
+		console.log(userId);
 		try {
-			const posts = await Post.findAll({
-				include: [
-					{
-						model: PostLike,
-						as: 'post-likes',  // Certifique-se de que este alias corresponde ao alias definido na associação
-					},
-				],
+		  let posts;
+	
+		  if (userId) {
+			posts = await Post.scope([{name: "likedByUser", options: userId}]).findAll({
+				attributes: [
+					"id",
+					"userId",
+					"title",
+					"content",
+					"total_likes",
+					"createdAt"
+				]
 			});
-
-			return posts;
+		  } else {
+			posts = await Post.findAll();
+		  }
+	
+		  return posts;
 		} catch (error) {
-			throw error;
+		  throw error;
 		}
-	}
+	  }
 
 	async update(body, id) {
 		const transaction = await Post.sequelize.transaction();
