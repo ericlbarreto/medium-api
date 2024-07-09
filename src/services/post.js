@@ -16,9 +16,23 @@ export default class PostService {
 		}
 	}
 
-	async read(id) {
+	async read(userId, postId) {
 		try {
-			const post = await Post.findByPk(id);
+			let post;
+			if (userId) {
+				post = await Post.scope([{name: "withAuthenticatedUser", options: userId}]).findByPk(postId ,{
+					attributes: [
+						"id",
+						"userId",
+						"title",
+						"content",
+						"total_likes",
+						"createdAt"
+					]
+				});
+			} else {
+				post = await Post.findByPk(postId);
+			}
 
 			if (!post) {
 				throw new Error("Post not found");
@@ -31,7 +45,6 @@ export default class PostService {
 	}
 
     async readAll(userId) {
-		console.log(userId);
 		try {
 		  let posts;
 	

@@ -26,8 +26,10 @@ export default class PostController extends BaseController {
     }
 
     async read(req, res) {
+        const userId = req.auth.id;
+        const postId = req.params.id
         try {
-            const post = await this.PostService.read(req.params.id);
+            const post = await this.PostService.read(userId, postId);
             this.successHandler(post, res);
         } catch (error) {
             this.errorHandler(error, req, res);
