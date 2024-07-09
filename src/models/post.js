@@ -40,11 +40,11 @@ export default class Post extends BaseModel {
 				updatedAt: "updatedAt",
 				defaultScope: {
 					attributes: {
-						exclude: ["userId"], // Excluir userId por padrão
+						exclude: ["userId"],
 					},
 				},
 				scopes: {
-					likedByUser: (userId) => ({
+					withAuthenticatedUser: (userId) => ({
 						attributes: [
 							[
 								sequelize.literal(`(
@@ -55,6 +55,12 @@ export default class Post extends BaseModel {
 							  pl."userId" = :userId
 						  )`),
 								"isLiked",
+							],
+							[
+								sequelize.literal(
+									`CASE WHEN "post"."userId" = :userId THEN TRUE ELSE FALSE END`
+								),
+								"isOwner",
 							],
 						],
 						replacements: {

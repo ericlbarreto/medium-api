@@ -36,7 +36,7 @@ export default class PostService {
 		  let posts;
 	
 		  if (userId) {
-			posts = await Post.scope([{name: "likedByUser", options: userId}]).findAll({
+			posts = await Post.scope([{name: "withAuthenticatedUser", options: userId}]).findAll({
 				attributes: [
 					"id",
 					"userId",
