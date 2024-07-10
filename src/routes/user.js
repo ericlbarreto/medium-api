@@ -22,7 +22,7 @@ export default class UserRoutes extends BaseRoutes {
             this.UserController.read.bind(this.UserController)
         )
 
-        this.router.patch(
+        this.router.put(
             "/:id",
             this.SchemaValidator.validate(UserSchema.update),
             this.UserController.update.bind(this.UserController)

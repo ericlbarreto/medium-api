@@ -29,7 +29,7 @@ export default class PostRoutes extends BaseRoutes {
 			this.PostController.readAll.bind(this.PostController)
 		);
 
-		this.router.patch(
+		this.router.put(
 			"/:id",
 			this.SchemaValidator.validate(PostSchema.update),
 			this.PostController.update.bind(this.PostController)

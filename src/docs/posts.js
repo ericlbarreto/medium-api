@@ -93,7 +93,7 @@
  *         description: Post not found
  *       500:
  *         description: Server error
- *   patch:
+ *   put:
  *     summary: Update post by ID
  *     tags: [Posts]
  *     security:
