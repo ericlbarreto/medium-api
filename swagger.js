@@ -8,11 +8,11 @@ const options = {
 			title: "Medium API",
 			version: "1.0.0",
 			description:
-				"A simple project for publishing articles and liking them.",
+				"Medium is an open platform where readers find dynamic thinking, and where expert and undiscovered voices can share their writing on any topic.",
 			contact: {
-				name: "Felipe Torres",
-				url: "https://github.com/felipetmacedo",
-				email: "ftmacedo.torres@gmail.com",
+				name: "Eric Barreto",
+				url: "https://github.com/ericlbarreto",
+				email: "ericbarreto521@gmail.com",
 			},
 		},
 		servers: [
