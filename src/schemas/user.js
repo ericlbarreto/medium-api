@@ -22,13 +22,13 @@ const userSchema = {
 	},
 	read: findById,
 	update: {
-		params: findById,
+		params: findById.params,
 		body: yup
 			.object()
 			.shape({
-				name: yup.string(),
-				email: yup.string().email(),
-				password: yup.string(),
+				name: yup.string().optional(),
+				email: yup.string().email().optional(),
+				password: yup.string().optional(),
 			})
 			.noUnknown(),
 	},

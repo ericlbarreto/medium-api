@@ -27,14 +27,14 @@ export default class User extends BaseModel {
 				sequelize: sequelize,
 				modelName: "user",
 				tableName: "users",
-				createdAt: "createdAt",
-				updatedAt: "updatedAt",
+				createdAt: "created_at",
+				updatedAt: "updated_at",
 			}
 		);
 	}
 
 	static associate(models) {
-		this.hasMany(models.Post, { foreignKey: 'userId', as: 'posts'})
-		this.hasMany(models.PostLike, { foreignKey: 'userId', as: 'post-likes'})
+		this.hasMany(models.Post, { foreignKey: 'user_id', as: 'posts'})
+		this.hasMany(models.PostLike, { foreignKey: 'user_id', as: 'post_likes'})
 	}
 }

@@ -32,10 +32,14 @@ export default class UserService {
 		}
 	}
 
-	async update(body, id) {
+	async update(body, id, authenticatedUser) {
 		const transaction = await User.sequelize.transaction();
 
 		try {
+			if (Number(id) !== Number(authenticatedUser)) {
+				throw new Error("Unauthorized user");
+			}
+
 			if (body.password) {
 				body.password = await bcrypt.hash(body.password, 10);
 			}
@@ -57,8 +61,12 @@ export default class UserService {
 		}
 	}
 
-	async delete(id) {
+	async delete(id, authenticatedUser) {
 		try {
+			if (Number(id) !== Number(authenticatedUser)) {
+				throw new Error("Unauthorized user");
+			}
+
 			const user = await User.findByPk(id);
 
 			if (!user) {

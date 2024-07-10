@@ -1,6 +1,7 @@
 import { UserSchema } from "../schemas";
 import { UserController } from "../controllers";
 import BaseRoutes from "./base";
+import { AuthMiddleware } from "../middlewares";
 
 export default class UserRoutes extends BaseRoutes {
 	constructor() {
@@ -25,12 +26,14 @@ export default class UserRoutes extends BaseRoutes {
         this.router.put(
             "/:id",
             this.SchemaValidator.validate(UserSchema.update),
+			AuthMiddleware.isAuthorized,
             this.UserController.update.bind(this.UserController)
         )
         
         this.router.delete(
             "/:id",
             this.SchemaValidator.validate(UserSchema.delete),
+			AuthMiddleware.isAuthorized,
             this.UserController.delete.bind(this.UserController)
         )
     

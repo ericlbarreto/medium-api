@@ -26,10 +26,10 @@ export default class PostController extends BaseController {
     }
 
     async read(req, res) {
-        const userId = req.auth.id;
-        const postId = req.params.id
+        const user_id = req.auth.id;
+        const post_id = req.params.id
         try {
-            const post = await this.PostService.read(userId, postId);
+            const post = await this.PostService.read(user_id, post_id);
             this.successHandler(post, res);
         } catch (error) {
             this.errorHandler(error, req, res);
@@ -37,10 +37,10 @@ export default class PostController extends BaseController {
     }
 
     async readAll(req, res) {
-        const userId = req.auth.id;
+        const user_id = req.auth.id;
         const page = req.query.page || 1;
         try {
-            const posts = await this.PostService.readAll(userId, { page });
+            const posts = await this.PostService.readAll(user_id, { page });
             this.successHandler(posts, res);
         } catch (error) {
             this.errorHandler(error, req, res);
@@ -48,8 +48,9 @@ export default class PostController extends BaseController {
     }
 
     async update(req, res) {
+        const user_id = req.auth.id;
         try {
-            const post = await this.PostService.update(req.body, req.params.id);
+            const post = await this.PostService.update(req.body, req.params.id, user_id);
             this.successHandler(post, res);
         } catch (error) {
             this.errorHandler(error, req, res);
@@ -57,8 +58,9 @@ export default class PostController extends BaseController {
     }
 
     async delete(req, res) {
+        const user_id = req.auth.id;
         try {
-            const post = await this.PostService.delete(req.params.id);
+            const post = await this.PostService.delete(req.params.id, user_id);
             this.successHandler(post, res);
         } catch (error) {
             this.errorHandler(error, req, res);

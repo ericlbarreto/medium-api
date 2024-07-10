@@ -20,7 +20,7 @@ const postSchema = {
 			.shape({
 				title: yup.string().required(),
 				content: yup.string().required(),
-				userId: yup.number().required(),
+				user_id: yup.number().required(),
 			})
 			.noUnknown(),
 	},
@@ -29,7 +29,7 @@ const postSchema = {
 		query: paginationSchema,
 	},
 	update: {
-		params: findById,
+		params: findById.params,
 		body: yup
 			.object()
 			.shape({

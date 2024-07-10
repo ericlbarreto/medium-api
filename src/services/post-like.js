@@ -1,12 +1,12 @@
 import { PostLike, Post } from "../models";
 
 export default class PostLikeService {
-	async like(userId, postId) {
+	async like(user_id, post_id) {
 		const transaction = await Post.sequelize.transaction();
 		try {
 			const post = await Post.findOne({
 				where: {
-					id: postId,
+					id: post_id,
 				},
 				transaction,
 			});
@@ -17,8 +17,8 @@ export default class PostLikeService {
 
 			const liked = await PostLike.findOne({
 				where: {
-					postId: postId,
-					userId: userId,
+					post_id: post_id,
+					user_id: user_id,
 				},
 				transaction,
 			});
@@ -29,15 +29,15 @@ export default class PostLikeService {
 
 			await PostLike.create(
 				{
-					postId: postId,
-					userId: userId,
+					post_id: post_id,
+					user_id: user_id,
 				},
 				{ transaction }
 			);
 
 			await Post.increment("total_likes", {
 				where: {
-					id: postId,
+					id: post_id,
 				},
 				by: 1,
 				transaction,
@@ -51,12 +51,12 @@ export default class PostLikeService {
 		}
 	}
 
-	async dislike(userId, postId) {
+	async dislike(user_id, post_id) {
 		const transaction = await Post.sequelize.transaction();
 		try {
 			const post = await Post.findOne({
 				where: {
-					id: postId,
+					id: post_id,
 				},
 				transaction,
 			});
@@ -67,8 +67,8 @@ export default class PostLikeService {
 
 			const hasLike = await PostLike.findOne({
 				where: {
-					postId: postId,
-					userId: userId,
+					post_id: post_id,
+					user_id: user_id,
 				},
 				transaction,
 			});
@@ -79,15 +79,15 @@ export default class PostLikeService {
 
 			await PostLike.destroy({
 				where: {
-					postId: postId,
-					userId: userId,
+					post_id: post_id,
+					user_id: user_id,
 				},
 				transaction,
 			});
 
 			await Post.decrement("total_likes", {
 				where: {
-					id: postId,
+					id: post_id,
 				},
 				by: 1,
 				transaction,

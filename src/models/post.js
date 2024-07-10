@@ -22,7 +22,7 @@ export default class Post extends BaseModel {
 					allowNull: false,
 					defaultValue: 0,
 				},
-				userId: {
+				user_id: {
 					type: DataTypes.INTEGER,
 					allowNull: false,
 					references: {
@@ -36,35 +36,35 @@ export default class Post extends BaseModel {
 				sequelize: sequelize,
 				modelName: "post",
 				tableName: "posts",
-				createdAt: "createdAt",
-				updatedAt: "updatedAt",
+				createdAt: "created_at",
+				updatedAt: "updated_at",
 				defaultScope: {
 					attributes: {
-						exclude: ["userId"],
+						exclude: ["user_id"],
 					},
 				},
 				scopes: {
-					withAuthenticatedUser: (userId) => ({
+					withAuthenticatedUser: (user_id) => ({
 						attributes: [
 							[
 								sequelize.literal(`(
 							SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
-							FROM "post-likes" AS pl
+							FROM "post_likes" AS pl
 							WHERE
-							  pl."postId" = "post"."id" AND
-							  pl."userId" = :userId
+							  pl."post_id" = "post"."id" AND
+							  pl."user_id" = :user_id
 						  )`),
-								"isLiked",
+								"is_liked",
 							],
 							[
 								sequelize.literal(
-									`CASE WHEN "post"."userId" = :userId THEN TRUE ELSE FALSE END`
+									`CASE WHEN "post"."user_id" = :user_id THEN TRUE ELSE FALSE END`
 								),
-								"isOwner",
+								"is_owner",
 							],
 						],
 						replacements: {
-							userId,
+							user_id,
 						},
 					}),
 				},
@@ -73,10 +73,10 @@ export default class Post extends BaseModel {
 	}
 
 	static associate(models) {
-		this.belongsTo(models.User, { foreignKey: "userId", as: "user" });
+		this.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
 		this.hasMany(models.PostLike, {
-			foreignKey: "postId",
-			as: "post-likes",
+			foreignKey: "post_id",
+			as: "post_likes",
 		});
 	}
 }
