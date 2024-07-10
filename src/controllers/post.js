@@ -48,8 +48,9 @@ export default class PostController extends BaseController {
     }
 
     async update(req, res) {
+        const user_id = req.auth.id;
         try {
-            const post = await this.PostService.update(req.body, req.params.id);
+            const post = await this.PostService.update(req.body, req.params.id, user_id);
             this.successHandler(post, res);
         } catch (error) {
             this.errorHandler(error, req, res);
@@ -57,8 +58,9 @@ export default class PostController extends BaseController {
     }
 
     async delete(req, res) {
+        const user_id = req.auth.id;
         try {
-            const post = await this.PostService.delete(req.params.id);
+            const post = await this.PostService.delete(req.params.id, user_id);
             this.successHandler(post, res);
         } catch (error) {
             this.errorHandler(error, req, res);

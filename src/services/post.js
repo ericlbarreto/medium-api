@@ -98,25 +98,29 @@ export default class PostService {
 		}
 	}
 
-	async update(body, id) {
+	async update(body, id, user_id) {
 		const transaction = await Post.sequelize.transaction();
-
+	
 		try {
-			const [_, [updatedPost]] = await Post.update(body, {
-				where: { id },
+			const [affectedRows, [updatedPost]] = await Post.update(body, {
+				where: { id, user_id },
 				returning: true,
 				transaction,
 			});
-
+	
+			if (!updatedPost) {
+				throw new Error("Post not found or user not authorized to update this post");
+			}
+	
 			await transaction.commit();
 			return updatedPost;
 		} catch (error) {
 			await transaction.rollback();
 			throw error;
 		}
-	}
+	}	
 
-	async delete(id) {
+	async delete(id, user_id) {
 		try {
 			const post = await Post.findByPk(id);
 
@@ -124,7 +128,11 @@ export default class PostService {
 				throw new Error("Post not found");
 			}
 
-			await Post.destroy({ where: { id } });
+			const deletedPost = await Post.destroy({ where: { id, user_id } });
+
+			if (!deletedPost) {
+				throw new Error("User not authorized to delete this post");
+			}
 
 			return { message: "Post deleted successfully" };
 		} catch (error) {
