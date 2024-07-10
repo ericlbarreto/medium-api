@@ -29,6 +29,11 @@ const options = {
 				},
 			},
 		},
+		security: [
+			{
+				bearerAuth: [],
+			},
+		],
 	},
 	apis: ["./src/docs/*.js"],
 };
