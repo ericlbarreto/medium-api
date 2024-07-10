@@ -29,7 +29,7 @@ const postSchema = {
 		query: paginationSchema,
 	},
 	update: {
-		params: findById,
+		params: findById.params,
 		body: yup
 			.object()
 			.shape({
