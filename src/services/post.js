@@ -17,24 +17,27 @@ export default class PostService {
 		}
 	}
 
-	async read(userId, postId) {
+	async read(user_id, post_id) {
 		try {
 			let post;
-			if (userId) {
+			if (user_id) {
 				post = await Post.scope([
-					{ name: "withAuthenticatedUser", options: userId },
-				]).findByPk(postId, {
+					{ name: "withAuthenticatedUser", options: user_id },
+				]).findByPk(post_id, {
 					attributes: [
 						"id",
-						"userId",
+						"user_id",
 						"title",
 						"content",
 						"total_likes",
-						"createdAt",
+						"created_at",
+						"updated_at",
+
+						
 					],
 				});
 			} else {
-				post = await Post.findByPk(postId);
+				post = await Post.findByPk(post_id);
 			}
 
 			if (!post) {
@@ -47,16 +50,16 @@ export default class PostService {
 		}
 	}
 
-	async readAll(userId, meta) {
+	async readAll(user_id, meta) {
 		try {
 			const scopes = [];
 			const Pagination = PaginationUtils.config({
 				page: meta.page,
 			});
-			if (userId) {
+			if (user_id) {
 				scopes.push({
 					name: "withAuthenticatedUser",
-					options: userId,
+					options: user_id,
 				});
 			}
 
@@ -65,13 +68,15 @@ export default class PostService {
 				raw: false,
 				attributes: [
 					"id",
-					"userId",
+					"user_id",
 					"title",
 					"content",
 					"total_likes",
-					"createdAt",
+					"created_at",
+					"updated_at",
+
 				],
-				order: [["createdAt", "DESC"]],
+				order: [["created_at", "DESC"]],
 			});
 
 			let totalItemsPromise;

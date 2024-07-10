@@ -11,10 +11,10 @@ export default class PostLikeController extends BaseController {
 	}
 
 	async like(req, res) {
-		const postId = req.params.id;
-		const userId = req.auth.id;
+		const post_id = req.params.id;
+		const user_id = req.auth.id;
 		try {
-			await this.PostLikeService.like(userId, postId);
+			await this.PostLikeService.like(user_id, post_id);
 			this.successHandler(true, res);
 		} catch (error) {
 			this.errorHandler(error, req, res);
@@ -22,10 +22,10 @@ export default class PostLikeController extends BaseController {
 	}
 
 	async dislike(req, res) {
-        const postId = req.params.id;
-		const userId = req.auth.id;
+        const post_id = req.params.id;
+		const user_id = req.auth.id;
 		try {
-			await this.PostLikeService.dislike(userId, postId);
+			await this.PostLikeService.dislike(user_id, post_id);
 			this.successHandler(true, res);
 		} catch (error) {
 			this.errorHandler(error, req, res);

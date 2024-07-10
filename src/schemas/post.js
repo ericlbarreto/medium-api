@@ -20,7 +20,7 @@ const postSchema = {
 			.shape({
 				title: yup.string().required(),
 				content: yup.string().required(),
-				userId: yup.number().required(),
+				user_id: yup.number().required(),
 			})
 			.noUnknown(),
 	},

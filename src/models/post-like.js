@@ -9,7 +9,7 @@ export default class PostLike extends BaseModel {
 					primaryKey: true,
 					autoIncrement: true,
 				},
-				userId: {
+				user_id: {
 					type: DataTypes.INTEGER,
 					allowNull: false,
 					references: {
@@ -17,7 +17,7 @@ export default class PostLike extends BaseModel {
 						key: "id",
 					},
 				},
-				postId: {
+				post_id: {
 					type: DataTypes.INTEGER,
 					allowNull: false,
 					references: {
@@ -30,15 +30,15 @@ export default class PostLike extends BaseModel {
 				timestamps: true,
 				sequelize: sequelize,
 				modelName: "like",
-				tableName: "post-likes",
-				createdAt: "createdAt",
-				updatedAt: "updatedAt",
+				tableName: "post_likes",
+				createdAt: "created_at",
+				updatedAt: "updated_at",
 			}
 		);
 	}
 
 	static associate(models) {
-		this.belongsTo(models.Post, { foreignKey: "postId", as: 'post' });
-		this.belongsTo(models.User, { foreignKey: "userId", as: 'user' });
+		this.belongsTo(models.Post, { foreignKey: "post_id", as: 'post' });
+		this.belongsTo(models.User, { foreignKey: "user_id", as: 'user' });
 	}
 }

@@ -12,9 +12,9 @@ module.exports = {
     const posts = Array.from({ length: 15 }).map(() => ({
       title: faker.lorem.words(3), // Gera um título aleatório com 3 palavras
       content: faker.lorem.paragraphs(3), // Gera conteúdo aleatório com 3 parágrafos
-      userId: userRows[Math.floor(Math.random() * userRows.length)].id, // Associa um usuário aleatório
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      user_id: userRows[Math.floor(Math.random() * userRows.length)].id, // Associa um usuário aleatório
+      created_at: new Date(),
+      updated_at: new Date(),
     }));
 
     await queryInterface.bulkInsert('posts', posts, {});

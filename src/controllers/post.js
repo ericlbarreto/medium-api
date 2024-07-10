@@ -26,10 +26,10 @@ export default class PostController extends BaseController {
     }
 
     async read(req, res) {
-        const userId = req.auth.id;
-        const postId = req.params.id
+        const user_id = req.auth.id;
+        const post_id = req.params.id
         try {
-            const post = await this.PostService.read(userId, postId);
+            const post = await this.PostService.read(user_id, post_id);
             this.successHandler(post, res);
         } catch (error) {
             this.errorHandler(error, req, res);
@@ -37,10 +37,10 @@ export default class PostController extends BaseController {
     }
 
     async readAll(req, res) {
-        const userId = req.auth.id;
+        const user_id = req.auth.id;
         const page = req.query.page || 1;
         try {
-            const posts = await this.PostService.readAll(userId, { page });
+            const posts = await this.PostService.readAll(user_id, { page });
             this.successHandler(posts, res);
         } catch (error) {
             this.errorHandler(error, req, res);
