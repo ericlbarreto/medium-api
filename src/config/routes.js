@@ -13,7 +13,7 @@ export default class Routes {
 	}
 
 	setup() {
-		this.routes.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+		this.routes.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 		this.routes.use("/login", this.AuthRoutes.setup());
 		this.routes.use("/users", this.UserRoutes.setup());
