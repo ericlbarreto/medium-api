@@ -9,6 +9,10 @@ const findById = {
 		.noUnknown(),
 };
 
+const paginationSchema = yup.object().shape({
+	page: yup.number().integer().min(1).default(1),
+});
+
 const postSchema = {
 	create: {
 		body: yup
@@ -21,6 +25,9 @@ const postSchema = {
 			.noUnknown(),
 	},
 	read: findById,
+	readAll: {
+		query: paginationSchema,
+	},
 	update: {
 		params: findById,
 		body: yup
@@ -39,6 +46,7 @@ const postSchema = {
 export default {
 	create: postSchema.create,
 	read: postSchema.read,
+	readAll: postSchema.readAll,
 	update: {
 		params: postSchema.update.params,
 		body: postSchema.update.body,

@@ -1,4 +1,5 @@
 import { Post, PostLike } from "../models";
+import { PaginationUtils } from "../utils";
 
 export default class PostService {
 	async create(post) {
@@ -20,15 +21,17 @@ export default class PostService {
 		try {
 			let post;
 			if (userId) {
-				post = await Post.scope([{name: "withAuthenticatedUser", options: userId}]).findByPk(postId ,{
+				post = await Post.scope([
+					{ name: "withAuthenticatedUser", options: userId },
+				]).findByPk(postId, {
 					attributes: [
 						"id",
 						"userId",
 						"title",
 						"content",
 						"total_likes",
-						"createdAt"
-					]
+						"createdAt",
+					],
 				});
 			} else {
 				post = await Post.findByPk(postId);
@@ -44,43 +47,61 @@ export default class PostService {
 		}
 	}
 
-    async readAll(userId) {
+	async readAll(userId, meta) {
 		try {
-		  let posts;
-	
-		  if (userId) {
-			posts = await Post.scope([{name: "withAuthenticatedUser", options: userId}]).findAll({
+			const scopes = [];
+			const Pagination = PaginationUtils.config({
+				page: meta.page,
+			});
+			if (userId) {
+				scopes.push({
+					name: "withAuthenticatedUser",
+					options: userId,
+				});
+			}
+
+			const postsPromise = Post.scope(scopes).findAll({
+				...Pagination.getQueryParams(),
+				raw: false,
 				attributes: [
 					"id",
 					"userId",
 					"title",
 					"content",
 					"total_likes",
-					"createdAt"
-				]
+					"createdAt",
+				],
+				order: [["createdAt", "DESC"]],
 			});
-		  } else {
-			posts = await Post.findAll();
-		  }
-	
-		  return posts;
+
+			let totalItemsPromise;
+			if (Pagination.getPage() === 1) {
+				totalItemsPromise = Post.count({});
+			}
+
+			const [posts, totalItems] = await Promise.all([
+				postsPromise,
+				totalItemsPromise,
+			]);
+
+			return {
+				...Pagination.mount(totalItems),
+				posts,
+			};
 		} catch (error) {
-		  throw error;
+			throw error;
 		}
-	  }
+	}
 
 	async update(body, id) {
 		const transaction = await Post.sequelize.transaction();
 
 		try {
-			const [_, [updatedPost]] = await Post.update(
-				body,
-				{
-					where: { id },
-					returning: true,
-					transaction,
-				}
-			);
+			const [_, [updatedPost]] = await Post.update(body, {
+				where: { id },
+				returning: true,
+				transaction,
+			});
 
 			await transaction.commit();
 			return updatedPost;

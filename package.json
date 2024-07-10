@@ -61,6 +61,7 @@
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
     "@babel/register": "^7.17.0",
+    "@faker-js/faker": "^8.4.1",
     "babel-plugin-module-resolver": "^4.1.0",
     "copy": "^0.3.2",
     "eslint": "^8.8.0",
