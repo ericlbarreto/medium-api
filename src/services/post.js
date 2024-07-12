@@ -22,7 +22,7 @@ export default class PostService {
 			let post;
 			if (user_id) {
 				post = await Post.scope([
-					{ name: "withUserInteraction", options: user_id },
+					{ name: "withUserLike", options: user_id },
 				]).findByPk(post_id, {
 					attributes: [
 						"id",
@@ -58,7 +58,7 @@ export default class PostService {
 			});
 			if (user_id) {
 				scopes.push({
-					name: "withUserInteraction",
+					name: "withUserLike",
 					options: user_id,
 				});
 			}
