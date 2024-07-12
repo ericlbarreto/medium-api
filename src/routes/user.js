@@ -18,22 +18,20 @@ export default class UserRoutes extends BaseRoutes {
 		);
 
         this.router.get(
-            "/:id",
-            this.SchemaValidator.validate(UserSchema.read),
+            "/",
+            AuthMiddleware.isAuthorized,
             this.UserController.read.bind(this.UserController)
         )
 
         this.router.put(
-            "/:id",
-            this.SchemaValidator.validate(UserSchema.update),
-			AuthMiddleware.isAuthorized,
+            "/",
+            AuthMiddleware.isAuthorized,
             this.UserController.update.bind(this.UserController)
         )
         
         this.router.delete(
-            "/:id",
-            this.SchemaValidator.validate(UserSchema.delete),
-			AuthMiddleware.isAuthorized,
+            "/",
+            AuthMiddleware.isAuthorized,
             this.UserController.delete.bind(this.UserController)
         )
     

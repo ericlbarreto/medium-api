@@ -1,6 +1,11 @@
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     User:
  *       type: object
@@ -29,7 +34,6 @@
  *         email: 'john.doe@example.com'
  *         password: 'securePassword123'
  */
-
 /**
  * @swagger
  * /users:
@@ -53,21 +57,11 @@
  *         description: Invalid request body
  *       500:
  *         description: Server error
- */
-
-/**
- * @swagger
- * /users/{id}:
  *   get:
- *     summary: Get user by ID
+ *     summary: Get current user
  *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the user to retrieve
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User retrieved successfully
@@ -80,14 +74,10 @@
  *       500:
  *         description: Server error
  *   put:
- *     summary: Update user by ID
+ *     summary: Update current user
  *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -108,14 +98,10 @@
  *       500:
  *         description: Server error
  *   delete:
- *     summary: Delete user by ID
+ *     summary: Delete current user
  *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       204:
  *         description: User deleted successfully

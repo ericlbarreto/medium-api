@@ -18,9 +18,9 @@ export default class UserService {
 		}
 	}
 
-	async read(id) {
+	async read(authenticatedUser) {
 		try {
-			const user = await User.findByPk(id);
+			const user = await User.findByPk(authenticatedUser);
 
 			if (!user) {
 				throw new Error("User not found");
@@ -32,7 +32,7 @@ export default class UserService {
 		}
 	}
 
-	async update(body, id, authenticatedUser) {
+	async update(body, authenticatedUser) {
 		const transaction = await User.sequelize.transaction();
 
 		try {
@@ -61,19 +61,15 @@ export default class UserService {
 		}
 	}
 
-	async delete(id, authenticatedUser) {
+	async delete(authenticatedUser) {
 		try {
-			if (Number(id) !== Number(authenticatedUser)) {
-				throw new Error("Unauthorized user");
-			}
-
-			const user = await User.findByPk(id);
+			const user = await User.findByPk(authenticatedUser);
 
 			if (!user) {
 				throw new Error("User not found");
 			}
 
-			await User.destroy({ where: { id } });
+			await User.destroy({ where: { authenticatedUser } });
 
 			return { message: "User deleted successfully" };
 		} catch (error) {

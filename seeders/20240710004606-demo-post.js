@@ -10,9 +10,9 @@ module.exports = {
     const userRows = users[0];
 
     const posts = Array.from({ length: 14 }).map(() => ({
-      title: faker.lorem.sentence(6), // Gera um título aleatório com 3 palavras
-      content: faker.lorem.paragraphs(3), // Gera conteúdo aleatório com 3 parágrafos
-      user_id: userRows[Math.floor(Math.random() * userRows.length)].id, // Associa um usuário aleatório
+      title: faker.lorem.sentence(6),
+      content: faker.lorem.paragraphs(3),
+      user_id: userRows[Math.floor(Math.random() * userRows.length)].id,
       created_at: new Date(),
       updated_at: new Date(),
     }));
