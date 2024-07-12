@@ -25,8 +25,10 @@ export default class UserController extends BaseController {
     }
 
     async read(req, res) {
+        const authenticatedUser = req.auth.id;
+
         try {
-            const user = await this.UserService.read(req.params.id);
+            const user = await this.UserService.read(authenticatedUser);
             this.successHandler(user, res);
         } catch (error) {
             this.errorHandler(error, req, res);
@@ -37,7 +39,7 @@ export default class UserController extends BaseController {
         const authenticatedUser = req.auth.id;
 
         try {
-            const user = await this.UserService.update(req.body, req.params.id, authenticatedUser);
+            const user = await this.UserService.update(req.body, authenticatedUser);
             this.successHandler(user, res);
         } catch (error) {
             this.errorHandler(error, req, res);
@@ -48,7 +50,7 @@ export default class UserController extends BaseController {
         const authenticatedUser = req.auth.id;
 
         try {
-            const user = await this.UserService.delete(req.params.id, authenticatedUser);
+            const user = await this.UserService.delete(authenticatedUser);
             this.successHandler(user, res);
         } catch (error) {
             this.errorHandler(error, req, res);

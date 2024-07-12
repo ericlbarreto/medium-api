@@ -20,9 +20,7 @@ const userSchema = {
 			})
 			.noUnknown(),
 	},
-	read: findById,
 	update: {
-		params: findById.params,
 		body: yup
 			.object()
 			.shape({
@@ -32,15 +30,11 @@ const userSchema = {
 			})
 			.noUnknown(),
 	},
-	delete: findById,
 };
 
 export default {
 	create: userSchema.create,
-	read: userSchema.read,
 	update: {
-		params: userSchema.update.params,
 		body: userSchema.update.body,
 	},
-	delete: userSchema.delete,
 };
