@@ -44,7 +44,7 @@ export default class Post extends BaseModel {
 					},
 				},
 				scopes: {
-					withAuthenticatedUser: (user_id) => ({
+					withUserInteraction: (user_id) => ({
 						attributes: [
 							[
 								sequelize.literal(`(
