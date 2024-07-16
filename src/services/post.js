@@ -1,8 +1,9 @@
-import { Post, PostLike } from "../models";
+import { Post, User } from "../models";
 import { PaginationUtils } from "../utils";
 
 export default class PostService {
-	async create(post) {
+	async create(body, user_id) {
+		const post = { ...body, user_id: user_id };
 		const transaction = await Post.sequelize.transaction();
 
 		try {
@@ -32,12 +33,36 @@ export default class PostService {
 						"total_likes",
 						"created_at",
 						"updated_at",
-
-						
 					],
+					include: [
+						{
+							model: User,
+							as: "user",
+							attributes: ["id", "name", "email"],
+						},
+					],
+					raw: true,
+					nest: true,
 				});
 			} else {
-				post = await Post.findByPk(post_id);
+				post = await Post.findByPk(post_id, {
+					attributes: [
+						"id",
+						"user_id",
+						"title",
+						"content",
+						"total_likes",
+						"created_at",
+						"updated_at",
+					],
+					include: [
+						{
+							model: User,
+							as: "user",
+							attributes: ["id", "name", "email"],
+						},
+					],
+				});
 			}
 
 			if (!post) {
@@ -74,7 +99,13 @@ export default class PostService {
 					"total_likes",
 					"created_at",
 					"updated_at",
-
+				],
+				include: [
+					{
+						model: User,
+						as: "user",
+						attributes: ["id", "name", "email"],
+					},
 				],
 				order: [["created_at", "DESC"]],
 			});
@@ -100,25 +131,27 @@ export default class PostService {
 
 	async update(body, id, user_id) {
 		const transaction = await Post.sequelize.transaction();
-	
+
 		try {
 			const [affectedRows, [updatedPost]] = await Post.update(body, {
 				where: { id, user_id },
 				returning: true,
 				transaction,
 			});
-	
+
 			if (!updatedPost) {
-				throw new Error("Post not found or user not authorized to update this post");
+				throw new Error(
+					"Post not found or user not authorized to update this post"
+				);
 			}
-	
+
 			await transaction.commit();
 			return updatedPost;
 		} catch (error) {
 			await transaction.rollback();
 			throw error;
 		}
-	}	
+	}
 
 	async delete(id, user_id) {
 		try {
