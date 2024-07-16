@@ -62,6 +62,8 @@ export default class PostService {
 							attributes: ["id", "name", "email"],
 						},
 					],
+					raw: true,
+					nest: true,
 				});
 			}
 
