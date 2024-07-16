@@ -33,7 +33,7 @@ const postSchema = {
 			.object()
 			.shape({
 				title: yup.string(),
-				content: yup.string().email(),
+				content: yup.string(),
 			})
 			.noUnknown(),
 	},
