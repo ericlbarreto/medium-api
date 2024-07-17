@@ -1,14 +1,5 @@
 import * as yup from "yup";
 
-const findById = {
-	params: yup
-		.object()
-		.shape({
-			id: yup.number().required(),
-		})
-		.noUnknown(),
-};
-
 const userSchema = {
 	create: {
 		body: yup
